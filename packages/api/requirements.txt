@@ -2,3 +2,4 @@ fastapi
 python-multipart
 numpy
 opencv-python
+uvicorn
