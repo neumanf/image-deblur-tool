@@ -2,9 +2,13 @@ import uvicorn
 import os
 from fastapi import FastAPI, File
 from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
 from deblur import ImageDeblur
 
 app = FastAPI()
+
+app.add_middleware(CORSMiddleware, allow_origins=[
+    "*"], allow_methods=["POST"], allow_headers=["*"])
 
 
 @app.post("/api/deblur")
