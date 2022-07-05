@@ -12,8 +12,8 @@ app.add_middleware(CORSMiddleware, allow_origins=[
 
 
 @app.post("/api/deblur")
-async def deblur_image(image: bytes = File(...)):
-    imageDeblurer = ImageDeblur(d=22, snr=25)
+async def deblur_image(r: int = 0, snr: int = 0, image: bytes = File(...)):
+    imageDeblurer = ImageDeblur(r, snr)
     res = imageDeblurer.deblur(image)
 
     return StreamingResponse(res, media_type="image/png")
