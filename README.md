@@ -1,5 +1,12 @@
 # Image Deblur Tool
 
+## Requirements
+
+-   Node.js
+-   Npm
+-   Python
+-   Pip
+
 ## Development
 
 First clone the repository and navigate to it, then:
