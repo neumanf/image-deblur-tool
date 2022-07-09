@@ -4,7 +4,7 @@
 
 -   Node.js
 -   Npm
--   Python
+-   Python 3
 -   Pip
 
 ## Development
