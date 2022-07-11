@@ -7,12 +7,13 @@ import {
     Stack,
     Title,
     Text,
-    InputWrapper,
-    NumberInput,
+    Tabs,
 } from "@mantine/core";
 import { useState } from "react";
 
-import { AppHeader } from "../components/Header";
+import { AppHeader } from "./components/Header";
+import { OutOfFocusInputs, MotionInputs } from "./components/Inputs";
+import isValidInput from "./utils/input-validator";
 
 const navbarLinks = [
     {
@@ -21,19 +22,14 @@ const navbarLinks = [
     },
 ];
 
-const isValidInput = (value) => {
-    if (isNaN(value) || value < 0 || value > 9999999) {
-        return false;
-    }
-    return true;
-};
-
 function App() {
     const [isLoading, setLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState(0);
     const [imageSource, setImageSource] = useState(null);
     const [debluriedImage, setDebluriedImage] = useState(null);
     const [radius, setRadius] = useState(0);
     const [snr, setSNR] = useState(0);
+    const [angle, setAngle] = useState(0);
 
     const deblurImage = async () => {
         setLoading(true);
@@ -80,40 +76,33 @@ function App() {
                             }
                             withPlaceholder={imageSource === null}
                         ></Image>
-                        <InputWrapper id="radius-input" label="R">
-                            <NumberInput
-                                value={radius}
-                                onChange={(r) => setRadius(r)}
-                                type="number"
-                                id="radius-input"
-                                placeholder="Radius"
-                                error={
-                                    !isValidInput(radius) &&
-                                    "R must be a positive number"
-                                }
-                                required
-                            />
-                        </InputWrapper>
-                        <InputWrapper id="snr-input" label="SNR">
-                            <NumberInput
-                                value={snr}
-                                onChange={(snr) => setSNR(snr)}
-                                type="number"
-                                id="snr-input"
-                                placeholder="Signal-to-noise ratio"
-                                error={
-                                    !isValidInput(snr) &&
-                                    "SNR must be a positive number"
-                                }
-                                required
-                            />
-                        </InputWrapper>
+                        <Tabs active={activeTab} onTabChange={setActiveTab}>
+                            <Tabs.Tab label="Out of focus">
+                                <OutOfFocusInputs
+                                    radius={radius}
+                                    setRadius={setRadius}
+                                    snr={snr}
+                                    setSNR={setSNR}
+                                />
+                            </Tabs.Tab>
+                            <Tabs.Tab label="Motion">
+                                <MotionInputs
+                                    radius={radius}
+                                    setRadius={setRadius}
+                                    snr={snr}
+                                    setSNR={setSNR}
+                                    angle={angle}
+                                    setAngle={setAngle}
+                                />
+                            </Tabs.Tab>
+                        </Tabs>
                         <Button
                             onClick={deblurImage}
                             disabled={
                                 imageSource === null ||
                                 !isValidInput(radius) ||
-                                !isValidInput(snr)
+                                !isValidInput(snr) ||
+                                (activeTab === 1 && !isValidInput(angle))
                             }
                             loading={isLoading}
                         >
