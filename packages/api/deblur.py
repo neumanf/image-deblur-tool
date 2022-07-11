@@ -4,9 +4,10 @@ from utils.image_converter import ImageConverter
 
 
 class ImageDeblur:
-    def __init__(self, d, snr):
+    def __init__(self, d, snr, angle):
         self.d = d
         self.snr = snr
+        self.angle = angle
 
     def blur_edge(self, img, d=31):
         h, w = img.shape[:2]
@@ -23,6 +24,16 @@ class ImageDeblur:
         kern = np.float32(kern) / 255.0
         return kern
 
+    def motion_kernel(self, angle, d, sz=65):
+        kern = np.ones((1, d), np.float32)
+        c, s = np.cos(angle), np.sin(angle)
+        A = np.float32([[c, -s, 0], [s, c, 0]])
+        sz2 = sz // 2
+        A[:,2] = (sz2, sz2) - np.dot(A[:,:2], ((d-1)*0.5, 0))
+        print(d, kern, A)
+        kern = cv.warpAffine(kern, A, (sz, sz), flags=cv.INTER_CUBIC)
+        return kern
+
     def deblur(self, image):
         img = ImageConverter.from_bytes_to_image(image)
         img = np.float32(img)/255.0
@@ -31,8 +42,13 @@ class ImageDeblur:
 
         d = self.d
         noise = 10**(-0.1*self.snr)
+        
+        if self.angle is not None:
+            angle = np.deg2rad(self.angle)
+            psf = self.motion_kernel(angle, d)
+        else:
+            psf = self.defocus_kernel(d)
 
-        psf = self.defocus_kernel(d)
         psf /= psf.sum()
         psf_pad = np.zeros_like(img)
         kh, kw = psf.shape
