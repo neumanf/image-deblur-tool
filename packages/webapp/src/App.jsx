@@ -15,13 +15,6 @@ import { AppHeader } from "./components/Header";
 import { OutOfFocusInputs, MotionInputs } from "./components/Inputs";
 import isValidInput from "./utils/input-validator";
 
-const navbarLinks = [
-    {
-        link: "#about",
-        label: "About",
-    },
-];
-
 function App() {
     const [isLoading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
@@ -54,7 +47,7 @@ function App() {
 
     return (
         <>
-            <AppHeader links={navbarLinks} />
+            <AppHeader />
             <Container>
                 <Group position="apart" grow>
                     <Stack>
