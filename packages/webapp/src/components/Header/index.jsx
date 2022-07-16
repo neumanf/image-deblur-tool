@@ -60,16 +60,24 @@ export function AppHeader() {
                         withArrow
                     >
                         <Text size="lg" weight="bold">
-                            Doesn't have an image to test?
+                            Don't have an image to test?
                         </Text>
-                        <Divider my="xs" />
                         <Text weight="bold">Out of focus</Text>
                         <Text>
                             <a href="https://i.stack.imgur.com/yrTNI.jpg">
                                 Download
                             </a>
                         </Text>
-                        <Text>Parameters: R = 28, SNR = 32</Text>
+                        <Text>Parameters: D = 28, SNR = 32</Text>
+                        <Divider my="xs" />
+                        <Text size="lg" weight="bold">
+                            How this filter works?
+                        </Text>
+                        <Text>
+                            <a href="https://docs.opencv.org/5.x/de/d3c/tutorial_out_of_focus_deblur_filter.html">
+                                Read about it
+                            </a>
+                        </Text>
                     </Popover>
                 </Group>
 

@@ -2,18 +2,18 @@ import { InputWrapper, NumberInput } from "@mantine/core";
 
 import isValidInput from "../../utils/input-validator";
 
-export function OutOfFocusInputs({ radius, setRadius, snr, setSNR }) {
+export function OutOfFocusInputs({ diameter, setDiameter, snr, setSNR }) {
     return (
         <>
-            <InputWrapper id="radius-input" label="R">
+            <InputWrapper id="diameter-input" label="D">
                 <NumberInput
-                    value={radius}
-                    onChange={(r) => setRadius(r)}
+                    value={diameter}
+                    onChange={(d) => setDiameter(d)}
                     type="number"
-                    id="radius-input"
+                    id="diameter-input"
                     placeholder="Radius"
                     error={
-                        !isValidInput(radius) && "R must be a positive number"
+                        !isValidInput(diameter) && "D must be a positive number"
                     }
                     required
                 />

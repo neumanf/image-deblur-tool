@@ -24,7 +24,7 @@ function App() {
     const [activeTab, setActiveTab] = useState(0);
     const [imageSource, setImageSource] = useState(null);
     const [debluriedImage, setDebluriedImage] = useState(null);
-    const [radius, setRadius] = useState(0);
+    const [diameter, setDiameter] = useState(0);
     const [snr, setSNR] = useState(0);
     const [angle, setAngle] = useState(0);
 
@@ -38,7 +38,7 @@ function App() {
 
             const apiUrl = import.meta.env.VITE_API_URL;
             const url = new URL(`${apiUrl}/api/deblur`);
-            url.searchParams.set("r", radius);
+            url.searchParams.set("d", diameter);
             url.searchParams.set("snr", snr);
             if (activeTab === 1) url.searchParams.set("angle", angle);
 
@@ -90,16 +90,16 @@ function App() {
                         <Tabs active={activeTab} onTabChange={setActiveTab}>
                             <Tabs.Tab label="Out of focus">
                                 <OutOfFocusInputs
-                                    radius={radius}
-                                    setRadius={setRadius}
+                                    diameter={diameter}
+                                    setDiameter={setDiameter}
                                     snr={snr}
                                     setSNR={setSNR}
                                 />
                             </Tabs.Tab>
                             <Tabs.Tab label="Motion">
                                 <MotionInputs
-                                    radius={radius}
-                                    setRadius={setRadius}
+                                    diameter={diameter}
+                                    setDiameter={setDiameter}
                                     snr={snr}
                                     setSNR={setSNR}
                                     angle={angle}
@@ -111,7 +111,7 @@ function App() {
                             onClick={deblurImage}
                             disabled={
                                 imageSource === null ||
-                                !isValidInput(radius) ||
+                                !isValidInput(diameter) ||
                                 !isValidInput(snr) ||
                                 (activeTab === 1 && !isValidInput(angle))
                             }

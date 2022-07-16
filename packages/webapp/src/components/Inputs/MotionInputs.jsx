@@ -4,8 +4,8 @@ import isValidInput from "../../utils/input-validator";
 import { OutOfFocusInputs } from "./OutOfFocusInputs";
 
 export function MotionInputs({
-    radius,
-    setRadius,
+    diameter,
+    setDiameter,
     snr,
     setSNR,
     angle,
@@ -14,8 +14,8 @@ export function MotionInputs({
     return (
         <>
             <OutOfFocusInputs
-                radius={radius}
-                setRadius={setRadius}
+                diameter={diameter}
+                setDiameter={setDiameter}
                 snr={snr}
                 setSNR={setSNR}
             />
@@ -24,7 +24,7 @@ export function MotionInputs({
                     value={angle}
                     onChange={(a) => setAngle(a)}
                     type="number"
-                    id="radius-input"
+                    id="diameter-input"
                     placeholder="Angle"
                     error={
                         !isValidInput(angle) &&

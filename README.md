@@ -27,6 +27,9 @@ $ cd ../webapp
 # install the dependencies
 $ npm install
 
+# Copy the .env example to a new file
+$ cp .env.example .env
+
 # start the webapp
 $ npm run dev
 ```
