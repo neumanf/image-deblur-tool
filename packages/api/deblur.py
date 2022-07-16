@@ -29,8 +29,7 @@ class ImageDeblur:
         c, s = np.cos(angle), np.sin(angle)
         A = np.float32([[c, -s, 0], [s, c, 0]])
         sz2 = sz // 2
-        A[:,2] = (sz2, sz2) - np.dot(A[:,:2], ((d-1)*0.5, 0))
-        print(d, kern, A)
+        A[:, 2] = (sz2, sz2) - np.dot(A[:, :2], ((d-1)*0.5, 0))
         kern = cv.warpAffine(kern, A, (sz, sz), flags=cv.INTER_CUBIC)
         return kern
 
@@ -42,7 +41,7 @@ class ImageDeblur:
 
         d = self.d
         noise = 10**(-0.1*self.snr)
-        
+
         if self.angle is not None:
             angle = np.deg2rad(self.angle)
             psf = self.motion_kernel(angle, d)
