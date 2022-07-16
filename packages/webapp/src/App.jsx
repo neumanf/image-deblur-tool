@@ -36,16 +36,19 @@ function App() {
             let image = document.querySelector("input[type=file]").files[0];
             formData.append("image", image);
 
-            const res = await fetch(
-                `http://127.0.0.1:8000/api/deblur?r=${radius}&snr=${snr}`,
-                {
-                    method: "POST",
-                    headers: {
-                        Accept: "*/*",
-                    },
-                    body: formData,
-                }
-            );
+            const apiUrl = import.meta.env.VITE_API_URL;
+            const url = new URL(`${apiUrl}/api/deblur`);
+            url.searchParams.set("r", radius);
+            url.searchParams.set("snr", snr);
+            if (activeTab === 1) url.searchParams.set("angle", angle);
+
+            const res = await fetch(url.toString(), {
+                method: "POST",
+                headers: {
+                    Accept: "*/*",
+                },
+                body: formData,
+            });
             const blob = await res.blob();
             setDebluriedImage(URL.createObjectURL(blob));
         } catch (error) {
