@@ -5,7 +5,7 @@ import isValidInput from "../../utils/input-validator";
 export function OutOfFocusInputs({ diameter, setDiameter, snr, setSNR }) {
     return (
         <>
-            <InputWrapper id="diameter-input" label="D">
+            <InputWrapper id="diameter-input" label="Diameter" my="sm">
                 <NumberInput
                     value={diameter}
                     onChange={(d) => setDiameter(d)}
@@ -18,7 +18,11 @@ export function OutOfFocusInputs({ diameter, setDiameter, snr, setSNR }) {
                     required
                 />
             </InputWrapper>
-            <InputWrapper id="snr-input" label="SNR">
+            <InputWrapper
+                id="snr-input"
+                label="Signal-to-Noise Ratio (SNR)"
+                my="sm"
+            >
                 <NumberInput
                     value={snr}
                     onChange={(snr) => setSNR(snr)}

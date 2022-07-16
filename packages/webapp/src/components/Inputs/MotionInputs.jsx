@@ -19,7 +19,7 @@ export function MotionInputs({
                 snr={snr}
                 setSNR={setSNR}
             />
-            <InputWrapper id="angle-input" label="Angle">
+            <InputWrapper id="angle-input" label="Angle" my="sm">
                 <NumberInput
                     value={angle}
                     onChange={(a) => setAngle(a)}
