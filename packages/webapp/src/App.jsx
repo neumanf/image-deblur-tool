@@ -9,6 +9,10 @@ import {
     Text,
     Tabs,
 } from "@mantine/core";
+import {
+    showNotification,
+    NotificationsProvider,
+} from "@mantine/notifications";
 import { useState } from "react";
 
 import { AppHeader } from "./components/Header";
@@ -26,27 +30,38 @@ function App() {
 
     const deblurImage = async () => {
         setLoading(true);
-        const formData = new FormData();
-        let image = document.querySelector("input[type=file]").files[0];
-        formData.append("image", image);
 
-        const res = await fetch(
-            `http://127.0.0.1:8000/api/deblur?r=${radius}&snr=${snr}`,
-            {
-                method: "POST",
-                headers: {
-                    Accept: "*/*",
-                },
-                body: formData,
-            }
-        );
-        const blob = await res.blob();
-        setDebluriedImage(URL.createObjectURL(blob));
+        try {
+            const formData = new FormData();
+            let image = document.querySelector("input[type=file]").files[0];
+            formData.append("image", image);
+
+            const res = await fetch(
+                `http://127.0.0.1:8000/api/deblur?r=${radius}&snr=${snr}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Accept: "*/*",
+                    },
+                    body: formData,
+                }
+            );
+            const blob = await res.blob();
+            setDebluriedImage(URL.createObjectURL(blob));
+        } catch (error) {
+            showNotification({
+                title: "Error",
+                message:
+                    "An unexpected error occurred while processing the request, please try again later.",
+                color: "red",
+            });
+        }
+
         setLoading(false);
     };
 
     return (
-        <>
+        <NotificationsProvider>
             <AppHeader />
             <Container>
                 <Group position="apart" grow>
@@ -113,7 +128,7 @@ function App() {
                     </Stack>
                 </Group>
             </Container>
-        </>
+        </NotificationsProvider>
     );
 }
 
